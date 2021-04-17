@@ -11,13 +11,13 @@
 /*Contenido de la tabla*/
 
 typedef struct {
-	char *seguro[80];
-	char *aseguradora[80];
-	char *marca[80];
-	char *modelo[80];
-	char *asegurado[80];
+	char seguro[1];
+	char aseguradora[80];
+	char marca[80];
+	int modelo;
+	char asegurado[80];
 	long int polizaID;
-	char *tipoDoc[6];
+	char tipoDoc[6];
 	int tipoVeh;
 	float valorpoliza;
 	float valorbien;
@@ -37,18 +37,18 @@ int main(){
 	Nodo *lista=NULL;
 
 	int opcion=0;
-	char *seguro=NULL;
-	char *aseguradora=NULL;
-	char *marca=NULL;
-	char *modelo=NULL;
-	char *asegurado=NULL;
+	char seguro[1]/*=NULL*/;
+	char aseguradora[80]/*=NULL*/;
+	char marca[80]/*=NULL*/;
+	int modelo=0;
+	char asegurado[80]/*=NULL*/;
 	long int polizaID=0.0;
-	char *tipoDoc=NULL;
+	char tipoDoc[80]/*c=NULL*/;
 	int tipoVeh=0;
 	float valorpoliza=0.0;
   float valorbien=0.0;
 	
-	Vehiculo *temp=NULL;
+	Vehiculo temp/*=NULL*/;
 
 	//Datos Vehiculo
 	while(opcion!= 6){
@@ -78,60 +78,60 @@ int main(){
 				case 2:
 						getchar();
 						system("clear");
-						temp=(Vehiculo*)malloc(sizeof(Vehiculo));
-						seguro=(char*)malloc(sizeof(char)*2);
-						aseguradora=(char*)malloc(sizeof(char)*80);
-						marca=(char*)malloc(sizeof(char)*80);
-						asegurado=(char*)malloc(sizeof(char)*80);
-						tipoDoc=(char*)malloc(sizeof(char)*3);
+						//temp=(Vehiculo)malloc(sizeof(Vehiculo));
+						//seguro=(char)malloc(sizeof(char)*2);
+						//aseguradora=(char)malloc(sizeof(char)*80);
+						//marca=(char)malloc(sizeof(char)*80);
+						//asegurado=(char)malloc(sizeof(char)*80);
+						//tipoDoc=(char)malloc(sizeof(char)*3);
 						printf("-------------------------------\n");
 						printf("-------Insertar vehiculo-------\n");
 						printf("-------------------------------\n");
 						printf("Digite si posee seguro (y/n): ");
-						//scanf("%s",seguro);
-						fgets(seguro,2,stdin);
+						scanf("%s",seguro);
+						//fgets(seguro,2,stdin);
 						printf("Digite el nombre de la empresa aseguradora: ");
-						//scanf("%*c%[^\n]",aseguradora);
-						fgets(aseguradora,80,stdin);
+						scanf("%*c%[^\n]",aseguradora);
+						//fgets(aseguradora,80,stdin);
 						printf("Digite la marca del vehiculo: ");
-						//scanf("%s",marca);
-						fgets(marca,80,stdin);
+						scanf("%s",marca);
+						//fgets(marca,80,stdin);
 						printf("Digite modelo del vehiculo: ");
-						//scanf("%s",modelo);
-						fgets(modelo,80,stdin);
+						scanf("%d",&modelo);
+						//fgets(modelo,80,stdin);
 						printf("Digite nombre del propietario: ");
-						//scanf("%*c%[^\n]",asegurado);
-						fgets(asegurado,80,stdin);
+						scanf("%*c%[^\n]",asegurado);
+						//fgets(asegurado,80,stdin);
 						printf("Digite ID poliza: ");
 						scanf("%ld",&polizaID);
 						getchar();
 						printf("Digite tipo de documento(CC,TI,NIT): ");
-						//scanf("%s",tipoDoc);
-						fgets(tipoDoc,3,stdin);
+						scanf("%s",tipoDoc);
+						//fgets(tipoDoc,3,stdin);
 						printf("Digite tipo de vehiculo:\nCamioneta(1)\nCamion(2)\nBus(3)\nSedan(4)\nMotos(5)\nTipo: ");
 						scanf("%d",&tipoVeh);
 						printf("Ingrese el valor de la poliza: ");
 						scanf("%f",&valorpoliza);
 						printf("Ingrese el valor asegurado del bien: ");
 						scanf("%f",&valorbien);
-						lista=insertarvehiculo(lista,*temp);
-						temp->polizaID=polizaID;
-						temp->tipoVeh=tipoVeh;
-						temp->valorpoliza=valorpoliza;
-						temp->valorbien=valorbien;
-						strncpy(*temp->seguro,seguro,strlen(*seguro));
-						strncpy(*temp->aseguradora,aseguradora,strlen(*aseguradora));
-						strncpy(*temp->marca,marca,strlen(*marca));
-						strncpy(*temp->modelo,modelo,strlen(*modelo));
-						strncpy(*temp->asegurado,asegurado,strlen(*asegurado));
-						strncpy(*temp->tipoDoc,tipoDoc,strlen(*tipoDoc));
-						free(seguro);
-						free(aseguradora);
-						free(marca);
-						free(modelo);
-						free(asegurado);
-						free(tipoDoc);
-						temp=NULL;
+						lista=insertarvehiculo(lista,temp);
+						temp.polizaID=polizaID;
+						temp.tipoVeh=tipoVeh;
+						temp.valorpoliza=valorpoliza;
+						temp.valorbien=valorbien;
+						temp.modelo=modelo;
+						strncpy(temp.seguro,seguro,strlen(seguro));
+						strncpy(temp.aseguradora,aseguradora,strlen(aseguradora));
+						strncpy(temp.marca,marca,strlen(marca));
+						strncpy(temp.asegurado,asegurado,strlen(asegurado));
+						strncpy(temp.tipoDoc,tipoDoc,strlen(tipoDoc));
+						//free(seguro);
+						//free(aseguradora);
+						//free(marca);
+						//free(modelo);
+						//free(asegurado);
+						//free(tipoDoc);
+						//temp/*=NULL*/;
 						break;
 				case 3:
 						break;
@@ -160,9 +160,9 @@ Nodo *insertarvehiculo(Nodo *lista, Vehiculo veh){
 	strncpy(nuevo->veh.seguro,veh.seguro,strlen(veh.seguro));
 	strncpy(nuevo->veh.aseguradora,veh.aseguradora,strlen(veh.aseguradora));
 	strncpy(nuevo->veh.marca,veh.marca,strlen(veh.marca));
-  strncpy(nuevo->veh.modelo,veh.modelo,strlen(veh.modelo));
 	strncpy(nuevo->veh.tipoDoc,veh.tipoDoc,strlen(veh.tipoDoc));
 	nuevo->veh.polizaID=veh.polizaID;
+	nuevo->veh.modelo=veh.modelo;
 	nuevo->veh.tipoVeh=veh.tipoVeh;
 	nuevo->veh.valorpoliza=veh.valorpoliza;
 	nuevo->veh.valorbien=veh.valorbien;
@@ -179,7 +179,12 @@ void imprimirLista(Nodo *lista){
 		printf("Error!\nLista vacia\n");
 		exit(EXIT_FAILURE);
 	}
-	
+	char seguro[1];
+	seguro=veh.seguro; 
+	char true[]={'y'};
+	char false[]={'n'};
+  
+
 	for(Nodo* p=lista; p!=NULL; p=p->sig){
 		printf("----------------------------------\n");
 		printf("-----------Vehiculo %d------------\n",cont+1);
@@ -187,7 +192,12 @@ void imprimirLista(Nodo *lista){
 		printf("Seguro: %s\n",p->veh.seguro);
 		printf("Aseguradora: %s\n",p->veh.aseguradora);
 		printf("Marca: %s\n",p->veh.marca);
-		printf("Modelo: %s\n",p->veh.modelo);
+		if(veh.seguro==true){
+			//printf("Modelo: %d\n",p->veh.modelo);
+			printf("Modelo: Si");
+			}else{
+				printf("Modelo: No");
+			}
 		printf("Propietario: %s\n",p->veh.asegurado);
 		printf("ID Poliza: %ld\n",p->veh.polizaID);
 		printf("Tipo de Documento: %s\n",p->veh.tipoDoc);
